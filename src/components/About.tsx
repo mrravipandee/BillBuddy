@@ -53,7 +53,7 @@ const About = () => {
       y: 0,
       transition: {
         duration: 0.5,
-        ease: "easeOut"
+        ease: [0.43, 0.13, 0.23, 0.96]
       }
     }
   };
@@ -88,7 +88,7 @@ const About = () => {
           {cards.map((card, index) => (
             <motion.div
               key={index}
-              variants={cardVariants}
+              // variants={cardVariants}
               whileHover={{ 
                 y: -5,
                 transition: { duration: 0.2 }

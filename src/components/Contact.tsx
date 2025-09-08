@@ -1,16 +1,16 @@
 // components/Contact.tsx
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, easeOut } from 'framer-motion';
 import { 
   Mail, 
   Phone, 
-  MapPin, 
-  MessageSquare,
+  MapPin,
   Send,
   User,
   Clock,
-  CheckCircle2
+  CheckCircle2,
+  MessageSquare
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -32,8 +32,34 @@ const Contact = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate form submission
-    console.log('Form submitted:', formData);
+    
+    // Format the message for MessageSquare
+    const MessageSquareMessage = `
+*New Contact Form Submission* 🚀
+
+*Name:* ${formData.name}
+*Email:* ${formData.email}
+*Subject:* ${formData.subject}
+
+*Message:*
+${formData.message}
+
+*Sent via Bill Buddy Website* 📧
+    `.trim();
+
+    // Encode the message for URL
+    const encodedMessage = encodeURIComponent(MessageSquareMessage);
+    
+    // MessageSquare number (replace with your actual number)
+    const MessageSquareNumber = "917058548204"; // Remove any spaces or special characters
+    
+    // Create MessageSquare URL
+    const MessageSquareUrl = `https://wa.me/${MessageSquareNumber}?text=${encodedMessage}`;
+    
+    // Open MessageSquare in a new tab
+    window.open(MessageSquareUrl, '_blank');
+    
+    // Set submitted state
     setIsSubmitted(true);
     
     // Reset form after 3 seconds
@@ -55,8 +81,8 @@ const Contact = () => {
       icon: <Phone size={24} className="text-blue-600" />,
       title: "Call Us",
       description: "Mon-Fri from 9am to 5pm",
-      details: "+91 70585 48204",
-      action: "tel:+917058548204"
+      details: "+1 (555) 123-4567",
+      action: "tel:+15551234567"
     },
     {
       icon: <MessageSquare size={24} className="text-blue-600" />,
@@ -69,7 +95,7 @@ const Contact = () => {
       icon: <MapPin size={24} className="text-blue-600" />,
       title: "Visit Us",
       description: "Our headquarters",
-      details: "Nashik, Maharashtra, India",
+      details: "123 Business Ave, Suite 100",
       action: "https://maps.google.com"
     }
   ];
@@ -95,7 +121,7 @@ const Contact = () => {
       y: 0,
       transition: {
         duration: 0.5,
-        ease: "easeOut"
+        ease: easeOut
       }
     }
   };
@@ -164,6 +190,30 @@ const Contact = () => {
                 </motion.a>
               ))}
             </div>
+
+            {/* MessageSquare Direct Button */}
+            <motion.div variants={itemVariants} className="bg-green-50 rounded-2xl p-6 border border-green-200">
+              <div className="flex items-center mb-4">
+                <div className="p-3 bg-green-100 rounded-xl w-12 h-12 flex items-center justify-center mr-4">
+                  <MessageSquare size={24} className="text-green-600" />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-gray-900 mb-1">MessageSquare Message</h4>
+                  <p className="text-sm text-gray-600">Get instant support via MessageSquare</p>
+                </div>
+              </div>
+              <motion.a
+                href="https://wa.me/917058548204"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2"
+              >
+                <MessageSquare size={20} />
+                Message on MessageSquare
+              </motion.a>
+            </motion.div>
 
             {/* Additional Info */}
             <motion.div variants={itemVariants} className="bg-blue-50 rounded-2xl p-6">
@@ -301,7 +351,7 @@ const Contact = () => {
                     className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2"
                   >
                     <Send size={20} />
-                    Send Message
+                    Send via MessageSquare
                   </motion.button>
                   <p className="text-sm text-gray-500 text-center">
                     By submitting this form, you agree to our{' '}
