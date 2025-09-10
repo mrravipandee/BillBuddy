@@ -71,28 +71,28 @@ ${formData.message}
 
   const contactMethods = [
     {
-      icon: <Mail size={24} className="text-blue-600" />,
+      icon: <Mail size={24} className="text-[#0C4CA1]" />,
       title: "Email Us",
       description: "We'll respond quickly",
       details: "support@billbuddy.com",
       action: "mailto:support@billbuddy.com"
     },
     {
-      icon: <Phone size={24} className="text-blue-600" />,
+      icon: <Phone size={24} className="text-[#0C4CA1]" />,
       title: "Call Us",
       description: "Mon-Fri from 9am to 5pm",
       details: "+1 (555) 123-4567",
       action: "tel:+15551234567"
     },
     {
-      icon: <MessageSquare size={24} className="text-blue-600" />,
+      icon: <MessageSquare size={24} className="text-[#0C4CA1]" />,
       title: "Live Chat",
       description: "Instant support",
       details: "Start chatting",
       action: "#chat"
     },
     {
-      icon: <MapPin size={24} className="text-blue-600" />,
+      icon: <MapPin size={24} className="text-[#0C4CA1]" />,
       title: "Visit Us",
       description: "Our headquarters",
       details: "123 Business Ave, Suite 100",
@@ -141,7 +141,7 @@ ${formData.message}
           transition={{ duration: 0.7 }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-medium mb-4">
+          <div className="inline-flex items-center px-4 py-2 bg-[#0C4CA1]/10 text-[#0C4CA1] rounded-full text-sm font-medium mb-4">
             <MessageSquare size={16} className="mr-2" />
             GET IN TOUCH
           </div>
@@ -177,14 +177,14 @@ ${formData.message}
                   key={index}
                   variants={itemVariants}
                   href={method.action}
-                  className="group bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 hover:border-blue-200"
+                  className="group bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 hover:border-[#0C4CA1]/20"
                 >
-                  <div className="mb-4 p-3 bg-blue-100 rounded-xl w-12 h-12 flex items-center justify-center group-hover:bg-blue-200 transition-colors duration-300">
+                  <div className="mb-4 p-3 bg-[#0C4CA1]/10 rounded-xl w-12 h-12 flex items-center justify-center group-hover:bg-[#0C4CA1]/20 transition-colors duration-300">
                     {method.icon}
                   </div>
                   <h4 className="font-semibold text-gray-900 mb-1">{method.title}</h4>
                   <p className="text-sm text-gray-600 mb-2">{method.description}</p>
-                  <p className="text-blue-600 font-medium group-hover:text-blue-700 transition-colors duration-300">
+                  <p className="text-[#0C4CA1] font-medium group-hover:text-[#0C4CA1]/80 transition-colors duration-300">
                     {method.details}
                   </p>
                 </motion.a>
@@ -192,7 +192,7 @@ ${formData.message}
             </div>
 
             {/* MessageSquare Direct Button */}
-            <motion.div variants={itemVariants} className="bg-green-50 rounded-2xl p-6 border border-green-200">
+            {/* <motion.div variants={itemVariants} className="bg-green-50 rounded-2xl p-6 border border-green-200">
               <div className="flex items-center mb-4">
                 <div className="p-3 bg-green-100 rounded-xl w-12 h-12 flex items-center justify-center mr-4">
                   <MessageSquare size={24} className="text-green-600" />
@@ -213,19 +213,19 @@ ${formData.message}
                 <MessageSquare size={20} />
                 Message on MessageSquare
               </motion.a>
-            </motion.div>
+            </motion.div> */}
 
             {/* Additional Info */}
-            <motion.div variants={itemVariants} className="bg-blue-50 rounded-2xl p-6">
+            <motion.div variants={itemVariants} className="bg-[#0C4CA1]/10 rounded-2xl p-6">
               <div className="flex items-start mb-4">
-                <Clock size={20} className="text-blue-600 mr-3 mt-1" />
+                <Clock size={20} className="text-[#0C4CA1] mr-3 mt-1" />
                 <div>
                   <h4 className="font-semibold text-gray-900 mb-1">Response Time</h4>
                   <p className="text-gray-600">We typically respond within 2 business hours</p>
                 </div>
               </div>
               <div className="flex items-start">
-                <CheckCircle2 size={20} className="text-blue-600 mr-3 mt-1" />
+                <CheckCircle2 size={20} className="text-[#0C4CA1] mr-3 mt-1" />
                 <div>
                   <h4 className="font-semibold text-gray-900 mb-1">Support Hours</h4>
                   <p className="text-gray-600">Monday - Friday: 9AM - 6PM (EST)</p>
@@ -259,7 +259,7 @@ ${formData.message}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setIsSubmitted(false)}
-                  className="text-blue-600 font-semibold hover:text-blue-700 transition-colors duration-300"
+                  className="text-[#0C4CA1] font-semibold hover:text-[#0C4CA1]/80 transition-colors duration-300"
                 >
                   Send another message
                 </motion.button>
@@ -282,7 +282,7 @@ ${formData.message}
                           required
                           value={formData.name}
                           onChange={handleChange}
-                          className="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                          className="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#0C4CA1]/20 focus:border-[#0C4CA1] transition-all duration-200"
                           placeholder="Your name"
                         />
                       </div>
@@ -316,7 +316,7 @@ ${formData.message}
                       required
                       value={formData.subject}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#0C4CA1]/20 focus:border-[#0C4CA1] transition-all duration-200"
                     >
                       <option value="">Select a subject</option>
                       <option value="general">General Inquiry</option>
@@ -337,7 +337,7 @@ ${formData.message}
                       rows={5}
                       value={formData.message}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#0C4CA1]/20 focus:border-[#0C4CA1] transition-all duration-200"
                       placeholder="Tell us how we can help..."
                     ></textarea>
                   </div>
@@ -348,14 +348,14 @@ ${formData.message}
                     }}
                     whileTap={{ scale: 0.98 }}
                     type="submit"
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2"
+                    className="w-full bg-[#0C4CA1] hover:bg-[#0C4CA1]/80 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2"
                   >
                     <Send size={20} />
                     Send via MessageSquare
                   </motion.button>
                   <p className="text-sm text-gray-500 text-center">
                     By submitting this form, you agree to our{' '}
-                    <a href="#privacy" className="text-blue-600 hover:text-blue-700 underline">
+                    <a href="#privacy" className="text-[#0C4CA1] hover:text-[#0C4CA1]/80 underline">
                       Privacy Policy
                     </a>
                   </p>

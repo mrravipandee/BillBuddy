@@ -1,235 +1,219 @@
 // components/Hero.tsx
 'use client';
 
-import { motion } from 'framer-motion';
-import { Download, FileText, BarChart3, Users, Shield, Zap, CheckCircle } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Download, CheckCircle, Play, X, Menu } from 'lucide-react';
+import Image from 'next/image';
+import { useState } from 'react';
+import { BillBuddyIcon } from '../../public';
 
 const Hero = () => {
+  const [showVideoModal, setShowVideoModal] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const handleDownload = () => {
+    // Create a temporary anchor element to trigger the download
+    const link = document.createElement('a');
+    link.href = '/billbuddy.apk'; // Path to your APK file in public folder
+    link.download = 'BillBuddy.apk';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
-    <section className="min-h-screen flex items-center justify-center px-4 py-16 bg-gradient-to-br from-blue-50 to-indigo-100 relative overflow-hidden">
+    <section className="min-h-[80vh] flex flex-col px-4 py-8 bg-gradient-to-br from-[#fff] to-[#fff] relative overflow-hidden">
+      {/* Video Modal */}
+      {showVideoModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg overflow-hidden w-full max-w-4xl aspect-video relative">
+            <button
+              onClick={() => setShowVideoModal(false)}
+              className="absolute top-4 right-4 z-10 bg-white rounded-full p-1 hover:bg-gray-200 transition-colors"
+            >
+              <X size={24} />
+            </button>
+            <iframe
+              src="https://www.youtube.com/embed/dQw4w9WgXcQ" // Replace with your actual demo video URL
+              title="BillBuddy Demo"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="w-full h-full"
+            ></iframe>
+          </div>
+        </div>
+      )}
+
       {/* Background decorative elements */}
       <div className="absolute top-10 left-10 w-72 h-72 bg-blue-200 rounded-full opacity-20 blur-3xl"></div>
       <div className="absolute bottom-10 right-10 w-96 h-96 bg-purple-200 rounded-full opacity-20 blur-3xl"></div>
-      
-      <div className="container mx-auto grid md:grid-cols-2 gap-12 items-center relative z-10">
-        {/* Left Content */}
-        <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7 }}
-          className="space-y-6"
-        >
-          <div className="mb-2">
-            <motion.span 
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="inline-flex items-center px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-medium mb-4"
-            >
-              <Zap size={16} className="mr-2" />
-              Trusted by 10,000+ businesses
-            </motion.span>
-          </div>
 
-          <h1 className="text-5xl md:text-6xl font-bold text-gray-900 leading-tight">
-            Simplify Your <span className="text-blue-600">Billing</span> Process
-          </h1>
-          
-          <p className="text-xl text-gray-700">
-            Bill Buddy is the ultimate billing solution that helps growing businesses streamline invoicing, 
-            track payments, and gain valuable financial insights—all in one place.
-          </p>
+      {/* Navigation Bar */}
+      <header className="w-full">
+        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+          {/* Logo on the left */}
+          <Image
+            src={BillBuddyIcon}
+            alt="Bill Buddy Logo"
+            width={60}
+            height={50}
+          />
 
-          <div className="space-y-3">
-            {[
-              "Create professional invoices in 60 seconds",
-              "Track payments and send automatic reminders",
-              "Get real-time financial insights and reports",
-              "Manage clients and payment history securely"
-            ].map((feature, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.3 + index * 0.1 }}
-                className="flex items-center"
-              >
-                <CheckCircle size={20} className="text-green-500 mr-3 flex-shrink-0" />
-                <span className="text-gray-700">{feature}</span>
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="flex flex-col sm:flex-row gap-4 pt-4">
-            <motion.button
-              whileHover={{ 
-                scale: 1.05,
-                boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)"
-              }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-blue-600 text-white font-semibold py-4 px-8 rounded-full flex items-center justify-center gap-2 transition-all duration-300 shadow-lg"
-            >
-              <Download size={20} />
-              Get Started Free
-            </motion.button>
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-6">
+            <ul className="flex space-x-6">
+              <li>
+                <a href="#features" className="text-gray-700 hover:text-[#0C4CA1] transition-colors relative group">
+                  Features
+                  <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-[#0C4CA1] transition-all duration-300 group-hover:w-full"></span>
+                </a>
+              </li>
+              <li>
+                <a href="#pricing" className="text-gray-700 hover:text-[#0C4CA1] transition-colors relative group">
+                  Pricing
+                  <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-[#0C4CA1] transition-all duration-300 group-hover:w-full"></span>
+                </a>
+              </li>
+              <li>
+                <a href="#contact" className="text-gray-700 hover:text-[#0C4CA1] transition-colors relative group">
+                  Contact
+                  <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-[#0C4CA1] transition-all duration-300 group-hover:w-full"></span>
+                </a>
+              </li>
+            </ul>
             
+            {/* Download button in navbar */}
             <motion.button
+              onClick={handleDownload}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="border border-gray-300 text-gray-700 font-semibold py-4 px-8 rounded-full flex items-center justify-center gap-2 transition-all duration-300 hover:border-blue-300 hover:bg-blue-50/50"
+              className="bg-[#0C4CA1] text-white font-semibold py-2 px-4 rounded-full flex items-center justify-center gap-2 transition-all duration-300 shadow-lg hover:bg-[#0C4CA1]/90 text-sm"
             >
-              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M8 5v14l11-7z"></path>
-              </svg>
-              Watch Demo
+              <Download size={16} />
+              Download
             </motion.button>
-          </div>
+          </nav>
 
-          <div className="pt-4">
-            <div className="flex items-center text-sm text-gray-600">
-              <Shield size={16} className="text-green-500 mr-2" />
-              <span>Secure & compliant • Free 14-day trial • No credit card required</span>
-            </div>
-          </div>
-        </motion.div>
-        
-        {/* Right Content - Phone Mockup */}
-        <motion.div
-          initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="flex justify-center"
+          {/* Mobile menu button */}
+          <button 
+            className="md:hidden text-gray-700"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            <Menu size={28} />
+          </button>
+        </div>
+
+        {/* Mobile Navigation Menu */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className="md:hidden bg-white border-t border-gray-200"
+            >
+              <div className="container mx-auto px-4 py-4 flex flex-col space-y-4">
+                <a 
+                  href="#features" 
+                  className="text-gray-700 hover:text-[#0C4CA1] transition-colors py-2"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Features
+                </a>
+                <a 
+                  href="#pricing" 
+                  className="text-gray-700 hover:text-[#0C4CA1] transition-colors py-2"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Pricing
+                </a>
+                <a 
+                  href="#contact" 
+                  className="text-gray-700 hover:text-[#0C4CA1] transition-colors py-2"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Contact
+                </a>
+                <motion.button
+                  onClick={handleDownload}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-[#0C4CA1] text-white font-semibold py-3 rounded-full flex items-center justify-center gap-2 transition-all duration-300 shadow-lg hover:bg-[#0C4CA1]/90 mt-2"
+                >
+                  <Download size={18} />
+                  Download App
+                </motion.button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </header>
+
+      {/* Hero Content */}
+      <div className="container mx-auto text-center relative z-10 max-w-3xl flex-1 flex flex-col justify-center">
+        {/* Main Heading */}
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#0C4CA1] mb-4 md:mb-6"
         >
-          <div className="relative">
-            {/* Glow effect */}
-            <div className="absolute -inset-4 bg-blue-200 rounded-3xl blur-lg opacity-70"></div>
-            
-            {/* Phone mockup */}
-            <div className="relative bg-white p-6 rounded-3xl shadow-2xl border-8 border-gray-800">
-              <div className="w-64 h-96 bg-gradient-to-b from-blue-400 to-indigo-600 rounded-2xl overflow-hidden">
-                {/* App screen content */}
-                <div className="p-5 text-white h-full flex flex-col">
-                  {/* Header */}
-                  <div className="flex justify-between items-center mb-6">
-                    <h2 className="font-bold text-lg">Bill Buddy</h2>
-                    <div className="w-6 h-6 rounded-full bg-white bg-opacity-20 flex items-center justify-center">
-                      <svg className="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"></path>
-                      </svg>
-                    </div>
-                  </div>
-                  
-                  {/* Stats */}
-                  <div className="bg-white bg-opacity-10 rounded-xl p-4 mb-4">
-                    <p className="text-xs opacity-80 mb-1">Current Balance</p>
-                    <p className="text-2xl font-bold">$12,458</p>
-                    <p className="text-xs opacity-80 mt-1">+$2,340 this month</p>
-                  </div>
-                  
-                  {/* Recent invoices */}
-                  <div className="flex-grow mb-4">
-                    <h3 className="text-sm font-medium mb-3">Recent Invoices</h3>
-                    <div className="space-y-2">
-                      {[
-                        { client: "Client A", amount: 1250, status: "paid" },
-                        { client: "Client B", amount: 895, status: "pending" },
-                        { client: "Client C", amount: 2350, status: "paid" }
-                      ].map((invoice, i) => (
-                        <div key={i} className="flex justify-between items-center p-2 bg-white bg-opacity-5 rounded-lg">
-                          <div>
-                            <p className="text-sm font-medium">{invoice.client}</p>
-                            <p className="text-xs opacity-70">{invoice.status === "paid" ? "Paid" : "Due in 3 days"}</p>
-                          </div>
-                          <div className="text-right">
-                            <span className="font-bold">${invoice.amount.toLocaleString()}</span>
-                            <div className={`w-2 h-2 rounded-full mt-1 ml-auto ${invoice.status === "paid" ? "bg-green-400" : "bg-yellow-400"}`}></div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  {/* Quick actions */}
-                  <div className="bg-white bg-opacity-5 rounded-lg p-2 flex justify-between">
-                    <button className="text-xs bg-white bg-opacity-20 px-3 py-1 rounded-full">New Invoice</button>
-                    <button className="text-xs bg-white bg-opacity-20 px-3 py-1 rounded-full">View Reports</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            {/* Floating elements */}
-            <motion.div 
-              className="absolute -top-4 -right-4 bg-white p-3 rounded-xl shadow-lg"
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.5, duration: 0.5 }}
-            >
-              <div className="flex items-center">
-                <div className="bg-green-100 p-1 rounded-full mr-2">
-                  <FileText size={14} className="text-green-600" />
-                </div>
-                <div>
-                  <p className="text-xs font-medium">Invoice Sent</p>
-                  <p className="text-xs text-gray-500">+$1,250</p>
-                </div>
-              </div>
-            </motion.div>
-            
-            <motion.div 
-              className="absolute -bottom-4 -left-4 bg-white p-3 rounded-xl shadow-lg"
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.7, duration: 0.5 }}
-            >
-              <div className="flex items-center">
-                <div className="bg-blue-100 p-1 rounded-full mr-2">
-                  <Users size={14} className="text-blue-600" />
-                </div>
-                <div>
-                  <p className="text-xs font-medium">Active Clients</p>
-                  <p className="text-xs text-gray-500">24</p>
-                </div>
-              </div>
-            </motion.div>
+          Bill Buddy{' '}
+          <span className="text-gray-900">makes billing simple</span>
+        </motion.h1>
 
-            {/* Third floating element */}
-            <motion.div 
-              className="absolute top-1/2 -right-6 bg-white p-3 rounded-xl shadow-lg"
-              initial={{ y: 10, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.9, duration: 0.5 }}
-            >
-              <div className="flex items-center">
-                <div className="bg-purple-100 p-1 rounded-full mr-2">
-                  <BarChart3 size={14} className="text-purple-600" />
-                </div>
-                <div>
-                  <p className="text-xs font-medium">This Month</p>
-                  <p className="text-xs text-gray-500">+15% revenue</p>
-                </div>
-              </div>
-            </motion.div>
-          </div>
+        {/* Subtitle */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          className="text-lg sm:text-xl text-gray-700 mb-6 md:mb-8 max-w-2xl mx-auto px-4"
+        >
+          From payments to inventory, manage your entire shop with ease.
+        </motion.p>
+
+        {/* Call to Action Buttons */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.6 }}
+          className="flex flex-col sm:flex-row gap-4 justify-center mb-6 md:mb-8 px-4"
+        >
+          <motion.button
+            onClick={handleDownload}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="bg-[#0C4CA1] text-white font-semibold py-3 px-6 md:py-4 md:px-8 rounded-full flex items-center justify-center gap-2 transition-all duration-300 shadow-lg hover:bg-[#0C4CA1]/90 text-sm md:text-base"
+          >
+            <Download size={20} />
+            Download APP
+          </motion.button>
+          
+          <motion.button
+            onClick={() => setShowVideoModal(true)}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="border border-gray-300 text-gray-700 font-semibold py-3 px-6 md:py-4 md:px-8 rounded-full flex items-center justify-center gap-2 transition-all duration-300 hover:border-[#0C4CA1]/70 hover:bg-[#0C4CA1]/10 text-sm md:text-base"
+          >
+            <Play size={20} />
+            Watch Demo
+          </motion.button>
+        </motion.div>
+
+        {/* Subtext */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.8 }}
+          className="text-xs sm:text-sm text-gray-600 flex flex-col sm:flex-row items-center justify-center flex-wrap gap-1 sm:gap-2 px-4"
+        >
+          <span>Free 30-day trial</span>
+          <span className="hidden sm:inline">•</span>
+          <span>No credit card required</span>
+          <span className="hidden sm:inline">•</span>
+          <span>Secure & reliable</span>
         </motion.div>
       </div>
-
-      {/* Trusted by section */}
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1, duration: 0.5 }}
-        className="absolute bottom-8 left-0 right-0"
-      >
-        <div className="container mx-auto text-center">
-          <p className="text-gray-500 text-sm mb-4">Trusted by businesses worldwide</p>
-          <div className="flex justify-center items-center gap-8 opacity-60">
-            {["ForangeX", "Khataa Kitab", "Urban Mall", "The Fizze Corp", "Vijay Sales", "H&P Grocers Market"].map((company, index) => (
-              <div key={index} className="text-gray-700 font-medium text-sm">{company}</div>
-            ))}
-          </div>
-        </div>
-      </motion.div>
     </section>
   );
 };

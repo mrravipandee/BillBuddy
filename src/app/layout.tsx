@@ -70,11 +70,11 @@ export const metadata: Metadata = {
     title: "Bill Buddy | Effortless Billing & Expense Management",
     description:
       "Manage bills, track expenses, and simplify your finances with Bill Buddy.",
-    url: "https://yourdomain.com", // replace with your domain
+    url: "https://billlbuddy.vercel.app",
     siteName: "Bill Buddy",
     images: [
       {
-        url: "https://yourdomain.com/og-image.png", // replace with your OG image
+        url: "https://billlbuddy.vercel.app/og-image.png", // replace with your OG image
         width: 1200,
         height: 630,
         alt: "Bill Buddy Dashboard",
@@ -88,8 +88,8 @@ export const metadata: Metadata = {
     title: "Bill Buddy | Smart Billing & Expense Management",
     description:
       "Effortless billing, invoicing, and expense tracking with Bill Buddy.",
-    images: ["https://yourdomain.com/twitter-image.png"], // replace with your Twitter image
-    creator: "@yourhandle", // replace with your Twitter handle if you have one
+    images: ["https://billlbuddy.vercel.app/twitter-image.png"], 
+    creator: "@billbuddyapp",
   },
   icons: {
     icon: "/favicon.ico",

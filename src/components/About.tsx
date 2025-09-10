@@ -1,165 +1,115 @@
-// components/About.tsx
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import { FileText, TrendingUp, ArrowRight } from 'lucide-react';
+import Image from "next/image";
+import { useState, useEffect, useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import {
+  BillBuddyScreenshot1,
+  BillBuddyScreenshot2,
+  BillBuddyScreenshot3,
+} from "../../public";
 
-const About = () => {
-  const cards = [
-    {
-      icon: <FileText size={32} className="text-blue-600" />,
-      title: "What is Bill Buddy?",
-      description: "Bill Buddy is a comprehensive billing and invoice management solution designed to help businesses of all sizes streamline their financial processes. Our platform automates invoice creation, tracks payments, and provides valuable insights into your business finances.",
-      features: [
-        "Automated invoice generation",
-        "Payment tracking and reminders",
-        "Multi-currency support",
-        "Customizable templates"
-      ],
-      cta: "Learn more"
-    },
-    {
-      icon: <TrendingUp size={32} className="text-blue-600" />,
-      title: "How it helps to grow your business reach",
-      description: "By automating your billing processes, Bill Buddy helps you focus on core business activities, reduce errors, and provide better service to your customers. Our analytics tools give you insights to make data-driven decisions.",
-      features: [
-        "Financial analytics dashboard",
-        "Client payment behavior insights",
-        "Revenue forecasting",
-        "Expense tracking"
-      ],
-      cta: "See features"
-    }
+export default function About() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
+  });
+
+  const images = [
+    { src: BillBuddyScreenshot1, alt: "Bill Buddy Dashboard" },
+    { src: BillBuddyScreenshot2, alt: "Bill Buddy Invoicing" },
+    { src: BillBuddyScreenshot3, alt: "Bill Buddy Reports" },
   ];
 
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
-  };
+  // Update active index based on scroll progress
+  useEffect(() => {
+    const unsubscribe = scrollYProgress.on("change", (latest) => {
+      const index = Math.floor(latest * images.length);
+      setActiveIndex(Math.min(index, images.length - 1));
+    });
 
-  const cardVariants = {
-    hidden: { 
-      opacity: 0, 
-      y: 30 
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        ease: [0.43, 0.13, 0.23, 0.96]
-      }
-    }
-  };
+    return () => unsubscribe();
+  }, [scrollYProgress, images.length]);
+
+  // Animations for text opacity + movement
+  const opacity1 = useTransform(scrollYProgress, [0, 0.3, 0.4], [1, 1, 0]);
+  const x1 = useTransform(scrollYProgress, [0, 0.3, 0.4], [0, 50, 100]);
+
+  const opacity2 = useTransform(scrollYProgress, [0.3, 0.4, 0.6, 0.7], [0, 1, 1, 0]);
+  const x2 = useTransform(scrollYProgress, [0.3, 0.4, 0.6, 0.7], [-100, 0, 0, 50]);
+
+  const opacity3 = useTransform(scrollYProgress, [0.6, 0.7, 1], [0, 1, 1]);
+  const x3 = useTransform(scrollYProgress, [0.6, 0.7, 1], [-50, 0, 0]);
+
 
   return (
-    <section id="about" className="py-20 px-4 bg-white">
-      <div className="container mx-auto max-w-6xl">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Simplify Your Billing Process
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Bill Buddy helps businesses of all sizes manage their invoicing and payments efficiently.
-          </p>
-        </motion.div>
-
-        {/* Cards Grid */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          className="grid md:grid-cols-2 gap-8"
-        >
-          {cards.map((card, index) => (
-            <motion.div
-              key={index}
-              // variants={cardVariants}
-              whileHover={{ 
-                y: -5,
-                transition: { duration: 0.2 }
-              }}
-              className="group bg-gray-50 p-8 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 relative overflow-hidden"
-            >
-              {/* Background accent */}
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-400 to-indigo-600"></div>
-              
-              {/* Icon */}
-              <div className="mb-6 p-3 bg-blue-100 rounded-full w-14 h-14 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                {card.icon}
-              </div>
-              
-              {/* Title */}
-              <h3 className="text-2xl font-semibold text-gray-900 mb-4">
-                {card.title}
-              </h3>
-              
-              {/* Description */}
-              <p className="text-gray-600 mb-6">
-                {card.description}
-              </p>
-              
-              {/* Features List */}
-              <ul className="mb-6 space-y-2">
-                {card.features.map((feature, i) => (
-                  <li key={i} className="flex items-start">
-                    <div className="bg-green-100 p-1 rounded-full mt-1 mr-3 flex-shrink-0">
-                      <div className="w-1.5 h-1.5 bg-green-600 rounded-full"></div>
-                    </div>
-                    <span className="text-gray-700">{feature}</span>
-                  </li>
-                ))}
-              </ul>
-              
-              {/* CTA Button */}
-              <motion.button
-                whileHover={{ x: 5 }}
-                className="flex items-center text-blue-600 font-medium group-hover:text-blue-700 transition-colors duration-300"
-              >
-                {card.cta}
-                <ArrowRight size={16} className="ml-2 group-hover:translate-x-1 transition-transform duration-300" />
-              </motion.button>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* Stats Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8"
-        >
-          {[
-            { value: "10K+", label: "Active Users" },
-            { value: "2M+", label: "Invoices Created" },
-            { value: "98%", label: "Customer Satisfaction" },
-            { value: "50+", label: "Countries" }
-          ].map((stat, index) => (
-            <div key={index} className="text-center p-4 bg-blue-50 rounded-xl">
-              <p className="text-3xl md:text-4xl font-bold text-blue-600 mb-2">{stat.value}</p>
-              <p className="text-gray-600">{stat.label}</p>
+    <div ref={containerRef} className="h-[300vh] relative">
+      {/* Sticky container */}
+      <div className="sticky top-0 h-screen overflow-hidden flex items-center justify-center">
+        {/* Images */}
+        {images.map((image, index) => (
+          <motion.div
+            key={index}
+            className="absolute inset-0 flex items-center justify-center z-10"
+            initial={false}
+            animate={{
+              opacity: index === activeIndex ? 1 : 0,
+              scale: index === activeIndex ? 1 : 1.1,
+            }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+          >
+            <div className="relative w-full h-full flex items-center justify-center">
+              <Image
+                src={image.src}
+                alt={image.alt}
+                fill
+                className="object-contain"
+                priority={index === 0}
+              />
             </div>
-          ))}
-        </motion.div>
-      </div>
-    </section>
-  );
-};
+          </motion.div>
+        ))}
 
-export default About;
+        {/* Text always centered */}
+        <div className="absolute inset-0 flex items-center justify-center z-0">
+          <div className="text-center px-4">
+            <motion.h2
+              style={{ opacity: opacity1, x: x1 }}
+              className="text-4xl md:text-6xl font-bold text-gray-500 drop-shadow-lg"
+            >
+              Bill Buddy makes billing management easy
+            </motion.h2>
+
+            <motion.h2
+              style={{ opacity: opacity2, x: x2 }}
+              className="text-4xl md:text-6xl font-bold text-gray-500 drop-shadow-lg"
+            >
+              Streamline your invoicing process
+            </motion.h2>
+
+            <motion.h2
+              style={{ opacity: opacity3, x: x3 }}
+              className="text-4xl md:text-6xl font-bold text-gray-500 drop-shadow-lg"
+            >
+              Get started with Bill Buddy today!
+            </motion.h2>
+
+          </div>
+        </div>
+
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex space-x-2">
+          {images.map((_, index) => (
+            <div
+              key={index}
+              className={`w-3 h-3 rounded-full ${index === activeIndex ? "bg-white" : "bg-white/50"
+                }`}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
