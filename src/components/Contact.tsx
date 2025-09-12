@@ -81,7 +81,7 @@ ${formData.message}
       icon: <Phone size={24} className="text-[#0C4CA1]" />,
       title: "Call Us",
       description: "Mon-Fri from 9am to 5pm",
-      details: "+1 (555) 123-4567",
+      details: "+91 70585 48204",
       action: "tel:+15551234567"
     },
     {
@@ -95,7 +95,7 @@ ${formData.message}
       icon: <MapPin size={24} className="text-[#0C4CA1]" />,
       title: "Visit Us",
       description: "Our headquarters",
-      details: "123 Business Ave, Suite 100",
+      details: "Nashik, Maharashtra, India - 422012",
       action: "https://maps.google.com"
     }
   ];

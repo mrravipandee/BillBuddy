@@ -189,7 +189,7 @@ const Hero = () => {
             Download APP
           </motion.button>
           
-          <motion.button
+          {/* <motion.button
             onClick={() => setShowVideoModal(true)}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -197,7 +197,7 @@ const Hero = () => {
           >
             <Play size={20} />
             Watch Demo
-          </motion.button>
+          </motion.button> */}
         </motion.div>
 
         {/* Subtext */}
